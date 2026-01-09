@@ -40,7 +40,7 @@ namespace osu.Framework
         /// </summary>
         protected virtual TextureFilteringMode DefaultTextureFilteringMode => TextureFilteringMode.Linear;
 
-        protected GameHost Host { get; private set; }
+        public GameHost Host { get; private set; }
 
         private readonly Bindable<bool> isActive = new Bindable<bool>(true);
 
@@ -257,7 +257,7 @@ namespace osu.Framework
         protected virtual OnlineStore CreateOnlineStore() => new OnlineStore();
 
         /// <summary>
-        /// Add a font to be globally accessible to the game.
+        /// Add a bitmap font to be globally accessible to the game.
         /// </summary>
         /// <param name="store">The backing store with font resources.</param>
         /// <param name="assetName">The base name of the font.</param>

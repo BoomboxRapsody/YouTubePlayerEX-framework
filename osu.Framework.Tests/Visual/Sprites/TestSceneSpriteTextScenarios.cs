@@ -1,4 +1,4 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 #nullable disable
@@ -229,6 +229,13 @@ namespace osu.Framework.Tests.Visual.Sprites
             {
                 RelativeSizeAxes = Axes.Both,
                 Child = new SpriteText { Current = boundString },
+            };
+
+            Cell(3, 4).Child = new SpriteText
+            {
+                RelativeSizeAxes = Axes.Both,
+                Text = "🐢 ZWJ: 😶‍🌫️", // 🐢 is U+1F60E, the Zero Width Joiner sequence also has Variation Selector-16 after th emoji glyphs
+                Font = FrameworkFont.Condensed.With(size: 32),
             };
 
             Scheduler.AddDelayed(() => boundString.Value = $"bindable: {++boundStringValue}", 200, true);

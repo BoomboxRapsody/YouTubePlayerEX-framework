@@ -1,4 +1,4 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -35,7 +35,7 @@ namespace osu.Framework.Tests.Text
         public void SetUp()
         {
             fontStore = new FontStore(new DummyRenderer(), useAtlas: false);
-            fontStore.AddTextureSource(new GlyphStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(Game).Assembly), @"Resources"), "Fonts/Roboto/Roboto-Regular"));
+            fontStore.AddTextureSource(new GlyphStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(TextBuilderTest).Assembly), @"Resources"), "Fonts/Roboto/Roboto-Regular"));
             fontStore.AddTextureSource(new GlyphStore(new NamespacedResourceStore<byte[]>(new DllResourceStore(typeof(Game).Assembly), @"Resources"), "Fonts/FontAwesome5/FontAwesome-Solid"));
 
             glyphA = fontStore.Get(null, 'a').AsNonNull();
@@ -559,10 +559,10 @@ namespace osu.Framework.Tests.Text
             var font = new FontUsage("test", size: font_size);
             var nullFont = new FontUsage(null);
             var builder = new TextBuilder(new TestStore(
-                new GlyphEntry(font, new TestGlyph('b')),
-                new GlyphEntry(nullFont, new TestGlyph('a')),
-                new GlyphEntry(font, new TestGlyph('?')),
-                new GlyphEntry(nullFont, new TestGlyph('?'))
+                new GlyphEntry(font, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('a'))),
+                new GlyphEntry(font, new TestGlyph(new Grapheme('?'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('?')))
             ), font);
 
             builder.AddText("a");
@@ -581,9 +581,9 @@ namespace osu.Framework.Tests.Text
             var font2R = new FontUsage("test2", weight: "Regular", size: font_size);
 
             var builder = new TextBuilder(new TestStore(
-                new GlyphEntry(font1B, new TestGlyph('b', fontName: font1B.FontName)),
-                new GlyphEntry(font2R, new TestGlyph('a', fontName: font2R.FontName)),
-                new GlyphEntry(font2B, new TestGlyph('a', fontName: font2B.FontName))
+                new GlyphEntry(font1B, new TestGlyph(new Grapheme('b'), fontName: font1B.FontName)),
+                new GlyphEntry(font2R, new TestGlyph(new Grapheme('a'), fontName: font2R.FontName)),
+                new GlyphEntry(font2B, new TestGlyph(new Grapheme('a'), fontName: font2B.FontName))
             ), font1B);
 
             builder.AddText("a");
@@ -603,9 +603,9 @@ namespace osu.Framework.Tests.Text
             var font2R = new FontUsage("test2", italics: false, size: font_size);
 
             var builder = new TextBuilder(new TestStore(
-                new GlyphEntry(font1I, new TestGlyph('b', fontName: font1I.FontName)),
-                new GlyphEntry(font2R, new TestGlyph('a', fontName: font2R.FontName)),
-                new GlyphEntry(font2I, new TestGlyph('a', fontName: font2I.FontName))
+                new GlyphEntry(font1I, new TestGlyph(new Grapheme('b'), fontName: font1I.FontName)),
+                new GlyphEntry(font2R, new TestGlyph(new Grapheme('a'), fontName: font2R.FontName)),
+                new GlyphEntry(font2I, new TestGlyph(new Grapheme('a'), fontName: font2I.FontName))
             ), font1I);
 
             builder.AddText("a");
@@ -623,10 +623,10 @@ namespace osu.Framework.Tests.Text
             var font = new FontUsage("test", size: font_size);
             var nullFont = new FontUsage(null);
             var builder = new TextBuilder(new TestStore(
-                new GlyphEntry(font, new TestGlyph('b')),
-                new GlyphEntry(nullFont, new TestGlyph('b')),
-                new GlyphEntry(font, new TestGlyph('?')),
-                new GlyphEntry(nullFont, new TestGlyph('?', 1))
+                new GlyphEntry(font, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(font, new TestGlyph(new Grapheme('?'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('?'), 1))
             ), font);
 
             builder.AddText("a");
@@ -644,10 +644,10 @@ namespace osu.Framework.Tests.Text
             var font = new FontUsage("test", size: font_size);
             var nullFont = new FontUsage(null);
             var builder = new TextBuilder(new TestStore(
-                new GlyphEntry(font, new TestGlyph('b')),
-                new GlyphEntry(nullFont, new TestGlyph('b')),
-                new GlyphEntry(font, new TestGlyph('b')),
-                new GlyphEntry(nullFont, new TestGlyph('?', 1))
+                new GlyphEntry(font, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(font, new TestGlyph(new Grapheme('b'))),
+                new GlyphEntry(nullFont, new TestGlyph(new Grapheme('?'), 1))
             ), font);
 
             builder.AddText("a");
@@ -668,6 +668,31 @@ namespace osu.Framework.Tests.Text
             builder.AddText("a");
 
             Assert.That(builder.Bounds, Is.EqualTo(Vector2.Zero));
+        }
+
+        [Test]
+        public void TestSupplementaryCharactersAreOneCharacter()
+        {
+            var builder = new TextBuilder(fontStore, normal_font);
+
+            builder.AddText("🙂"); // 🙂 is U+1F642, which is greater than char.MaxValue (0xFFFF)
+
+            Assert.That(builder.Characters, Has.Count.EqualTo(1));
+        }
+
+        [Test]
+        public void TestMalformedUtf16()
+        {
+            const char fallback_character = '?';
+            // surrogate character without a pair is invalid
+            const string malformed_utf16 = "abc\uD800xyz";
+
+            Assume.That(char.IsSurrogate(malformed_utf16, 3));
+
+            var builder = new TextBuilder(fontStore, normal_font, fallbackCharacter: fallback_character);
+            builder.AddText(malformed_utf16);
+
+            Assert.That(builder.Characters[3].Character, Is.EqualTo(fallback_character));
         }
 
         [TearDown]
@@ -692,7 +717,7 @@ namespace osu.Framework.Tests.Text
                 this.glyphs = glyphs;
             }
 
-            public ITexturedCharacterGlyph Get(string? fontName, char character)
+            public ITexturedCharacterGlyph Get(string? fontName, Grapheme character)
             {
                 if (string.IsNullOrEmpty(fontName))
                     return glyphs.FirstOrDefault(g => g.Glyph.Character == character).Glyph;
@@ -700,7 +725,7 @@ namespace osu.Framework.Tests.Text
                 return glyphs.FirstOrDefault(g => g.Font.FontName.EndsWith(fontName, StringComparison.Ordinal) && g.Glyph.Character == character).Glyph;
             }
 
-            public Task<ITexturedCharacterGlyph?> GetAsync(string fontName, char character) => throw new NotImplementedException();
+            public Task<ITexturedCharacterGlyph?> GetAsync(string fontName, Grapheme character) => throw new NotImplementedException();
         }
 
         private readonly struct GlyphEntry
@@ -724,12 +749,13 @@ namespace osu.Framework.Tests.Text
             public float Width { get; }
             public float Baseline { get; }
             public float Height { get; }
-            public char Character { get; }
+            public Grapheme Character { get; }
             public string? FontName { get; }
+            public bool Coloured => false;
 
             private readonly float glyphKerning;
 
-            public TestGlyph(char character, float xOffset = 0, float yOffset = 0, float xAdvance = 0, float width = 0, float baseline = 0, float height = 0, float kerning = 0, string? fontName = null)
+            public TestGlyph(Grapheme character, float xOffset = 0, float yOffset = 0, float xAdvance = 0, float width = 0, float baseline = 0, float height = 0, float kerning = 0, string? fontName = null)
             {
                 glyphKerning = kerning;
                 Character = character;
