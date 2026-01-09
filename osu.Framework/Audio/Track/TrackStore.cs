@@ -55,6 +55,20 @@ namespace osu.Framework.Audio.Track
             return trackBass;
         }
 
+        public Track GetFromStream(Stream dataStream, string name)
+        {
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
+
+            if (dataStream == null) return null;
+
+            TrackBass trackBass = new TrackBass(dataStream, name);
+
+            mixer.Add(trackBass);
+            AddItem(trackBass);
+
+            return trackBass;
+        }
+
         public Task<Track> GetAsync(string name, CancellationToken cancellationToken = default) =>
             Task.Run(() => Get(name), cancellationToken);
 
