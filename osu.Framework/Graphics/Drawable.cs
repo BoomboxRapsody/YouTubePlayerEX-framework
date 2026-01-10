@@ -2463,7 +2463,7 @@ namespace osu.Framework.Graphics
         /// <param name="queue">The input queue to be built.</param>
         /// <param name="allowBlocking">Whether blocking at <see cref="PassThroughInputManager"/>s should be allowed.</param>
         /// <returns>Returns false if we should skip this sub-tree.</returns>
-        internal virtual bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
+        public virtual bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
         {
             if (!PropagateNonPositionalInputSubTree)
                 return false;

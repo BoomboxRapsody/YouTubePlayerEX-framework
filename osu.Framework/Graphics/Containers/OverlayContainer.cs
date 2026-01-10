@@ -29,7 +29,7 @@ namespace osu.Framework.Graphics.Containers
         /// </summary>
         protected virtual bool BlockNonPositionalInput => false;
 
-        internal override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
+        public override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
         {
             if (PropagateNonPositionalInputSubTree && HandleNonPositionalInput && BlockNonPositionalInput)
             {

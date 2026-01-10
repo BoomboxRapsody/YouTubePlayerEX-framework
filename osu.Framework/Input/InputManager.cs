@@ -440,7 +440,7 @@ namespace osu.Framework.Input
             return true;
         }
 
-        internal override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
+        public override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
         {
             if (!allowBlocking)
                 base.BuildNonPositionalInputQueue(queue, false);

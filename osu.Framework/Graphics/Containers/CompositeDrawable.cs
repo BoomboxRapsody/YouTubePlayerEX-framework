@@ -1420,7 +1420,7 @@ namespace osu.Framework.Graphics.Containers
         /// <returns>Whether or not the specified drawable should be considered when building input queues.</returns>
         protected virtual bool ShouldBeConsideredForInput(Drawable child) => child.LoadState == LoadState.Loaded;
 
-        internal override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
+        public override bool BuildNonPositionalInputQueue(List<Drawable> queue, bool allowBlocking = true)
         {
             if (!base.BuildNonPositionalInputQueue(queue, allowBlocking))
                 return false;
