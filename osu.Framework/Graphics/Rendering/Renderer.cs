@@ -971,7 +971,7 @@ namespace osu.Framework.Graphics.Rendering
                     ProjMatrix = ProjectionMatrix,
                     ToMaskingSpace = currentMaskingInfo.ToMaskingSpace,
                     IsMasking = IsMaskingActive,
-                    CornerRadius = currentMaskingInfo.CornerRadius,
+                    CornerRadius = currentMaskingInfo.CornerRadius.Vector,
                     CornerExponent = currentMaskingInfo.CornerExponent,
                     MaskingRect = new Vector4(
                         currentMaskingInfo.MaskingRect.Left,
@@ -1007,7 +1007,7 @@ namespace osu.Framework.Graphics.Rendering
                     EdgeOffset = currentMaskingInfo.EdgeOffset,
                     DiscardInner = currentMaskingInfo.Hollow,
                     InnerCornerRadius = currentMaskingInfo.Hollow
-                        ? currentMaskingInfo.HollowCornerRadius
+                        ? currentMaskingInfo.HollowCornerRadius.Vector
                         : globalUniformBuffer.Data.InnerCornerRadius,
                     WrapModeS = (int)CurrentWrapModeS,
                     WrapModeT = (int)CurrentWrapModeT

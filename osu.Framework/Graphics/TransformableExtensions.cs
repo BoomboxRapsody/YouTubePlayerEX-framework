@@ -508,6 +508,22 @@ namespace osu.Framework.Graphics
             where T : class, ITransformable
             => drawable.TransformBindableTo(bindable, newValue, duration, new DefaultEasingFunction(easing));
 
+        /// <summary>
+        /// Smoothly adjusts <see cref="CompositeDrawable.CornerRadius"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> RoundCornersTo<T>(this T drawable, CornersInfo newValue, double duration = 0, Easing easing = Easing.None)
+            where T : CompositeDrawable
+            => drawable.RoundCornersTo(newValue, duration, new DefaultEasingFunction(easing));
+
+        /// <summary>
+        /// Smoothly adjusts <see cref="CompositeDrawable.CornerRadius"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> RoundCornersTo<T>(this T drawable, float newValue, double duration = 0, Easing easing = Easing.None)
+            where T : CompositeDrawable
+            => drawable.RoundCornersTo(newValue, duration, new DefaultEasingFunction(easing));
+
         #endregion
 
         #region Generic Easing
@@ -790,6 +806,24 @@ namespace osu.Framework.Graphics
             where T : class, ITransformable
             where TEasing : IEasingFunction
             => drawable.TransformTo(drawable.PopulateTransform(new TransformBindable<TValue, TEasing, T>(bindable), newValue, duration, easing));
+
+        /// <summary>
+        /// Smoothly adjusts <see cref="CompositeDrawable.CornerRadius"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> RoundCornersTo<T, TEasing>(this T drawable, CornersInfo destination, double duration, in TEasing easing)
+            where T : CompositeDrawable
+            where TEasing : IEasingFunction
+            => drawable.TransformTo(nameof(drawable.CornerRadius), destination, duration, easing);
+
+        /// <summary>
+        /// Smoothly adjusts <see cref="CompositeDrawable.CornerRadius"/> over time.
+        /// </summary>
+        /// <returns>A <see cref="TransformSequence{T}"/> to which further transforms can be added.</returns>
+        public static TransformSequence<T> RoundCornersTo<T, TEasing>(this T drawable, float destination, double duration, in TEasing easing)
+            where T : CompositeDrawable
+            where TEasing : IEasingFunction
+            => drawable.TransformTo(nameof(drawable.CornerRadius), new CornersInfo(destination), duration, easing);
 
         #endregion
 
