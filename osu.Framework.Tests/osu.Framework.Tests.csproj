@@ -2,6 +2,7 @@
   <PropertyGroup Label="Project">
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>WinExe</OutputType>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateProgramFile>false</GenerateProgramFile>
