@@ -33,7 +33,7 @@ namespace osu.Framework.Platform.Linux
                 : new SDL2LinuxWindow(preferredSurface, Options.FriendlyGameName, BypassCompositor);
         */
 
-        protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface) => new SDL3LinuxWindow(preferredSurface, Options.FriendlyGameName, BypassCompositor);
+        protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface) => new SDL2LinuxWindow(preferredSurface, Options.FriendlyGameName, BypassCompositor);
 
         protected override ReadableKeyCombinationProvider CreateReadableKeyCombinationProvider() => new LinuxReadableKeyCombinationProvider();
 

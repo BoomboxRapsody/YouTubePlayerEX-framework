@@ -33,7 +33,7 @@ namespace osu.Framework.Platform.MacOS
                 : new SDL2MacOSWindow(preferredSurface, Options.FriendlyGameName);
         */
 
-        protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface) => new SDL3MacOSWindow(preferredSurface, Options.FriendlyGameName);
+        protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface) => new SDL2MacOSWindow(preferredSurface, Options.FriendlyGameName);
 
         public override IEnumerable<string> UserStoragePaths
         {
