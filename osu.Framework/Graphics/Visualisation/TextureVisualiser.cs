@@ -74,14 +74,14 @@ namespace osu.Framework.Graphics.Visualisation
 
             ToolbarContent.AddRange(new Drawable[]
             {
-                new SpriteText { Text = "Mip level" },
+                new SpriteText { Text = "Mip level", Font = FrameworkFont.Regular },
                 new BasicSliderBar<int>
                 {
                     Height = 20,
                     Width = 250,
                     Current = visualisedMipLevel,
                 },
-                mipLevelText = new SpriteText(),
+                mipLevelText = new SpriteText() { Font = FrameworkFont.Regular },
             });
 
             visualisedMipLevel.BindValueChanged(val =>
