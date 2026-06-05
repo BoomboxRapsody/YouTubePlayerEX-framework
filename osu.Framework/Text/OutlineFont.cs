@@ -371,9 +371,9 @@ namespace osu.Framework.Text
             {
                 var result = new StringBuilder();
 
-                foreach (char c in s)
+                foreach (Grapheme c in s.EnumerateRunes())
                 {
-                    if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+                    if ((c.CharValue >= '0' && c.CharValue <= '9') || (c.CharValue >= 'A' && c.CharValue <= 'Z') || (c.CharValue >= 'a' && c.CharValue <= 'z'))
                         result.Append(c);
                 }
 

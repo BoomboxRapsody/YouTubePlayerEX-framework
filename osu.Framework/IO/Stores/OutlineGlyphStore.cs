@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Graphics.Textures;
@@ -104,7 +105,7 @@ namespace osu.Framework.IO.Stores
 
         public bool HasGlyph(Grapheme c)
         {
-            return Font.HasGlyph(c.CharValue);
+            return c.IsSingleScalarValue && Font.HasGlyph(((Rune)c).Value);
         }
 
         public CharacterGlyph? Get(Grapheme c)
@@ -117,22 +118,45 @@ namespace osu.Framework.IO.Stores
             return new CharacterGlyph(c, metrics.XOffset, metrics.YOffset, metrics.XAdvance, metrics.Baseline, this);
         }
 
+        /// <summary>
+        /// This is a convenience method that converts the character to a <see cref="Grapheme"/> and calls <see cref="Get(Grapheme)"/>.
+        /// </summary>
+        /// <param name="character">The character to retrieve.</param>
+        public CharacterGlyph Get(char character)
+        {
+            return Get(new Grapheme(character));
+        }
+
         public int GetKerning(Grapheme left, Grapheme right)
         {
             return Font.GetKerning(Font.GetGlyphIndex(left.CharValue), Font.GetGlyphIndex(right.CharValue), rawVariation);
         }
 
         Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name, CancellationToken cancellationToken)
-            => Task.Run(() => ((IGlyphStore)this).Get(new Grapheme(name[0])), cancellationToken)!;
+            => Task.Run(() => ((IGlyphStore)this).Get(new Grapheme(name)), cancellationToken)!;
 
-        CharacterGlyph IResourceStore<CharacterGlyph>.Get(string name) => Get(new Grapheme(name[0]))!;
+        CharacterGlyph IResourceStore<CharacterGlyph>.Get(string name) => Get(new Grapheme(name))!;
 
         public TextureUpload Get(string name)
         {
-            if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
-                return null!;
+            Grapheme grapheme;
 
-            char c = name.Last();
+            // name is expected to be in the format "{Grapheme}" or "Font:{FontName}/{Grapheme}"
+            // this is a shorthand to check if there is a font name in the lookup
+            if (name.Length > 1)
+            {
+                // if FontName does not match, return null.
+                if (!name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
+                    return null;
+
+                grapheme = new Grapheme(name.AsSpan(FontName.Length + 1));
+            }
+            else
+            {
+                grapheme = new Grapheme(name);
+            }
+
+            char c = grapheme.CharValue;
             uint glyphIndex = Font.GetGlyphIndex(c);
 
             return Font.RasterizeGlyph(glyphIndex, rawVariation)!;
@@ -143,10 +167,7 @@ namespace osu.Framework.IO.Stores
             if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
                 return null!;
 
-            char c = name.Last();
-            uint glyphIndex = await Font.GetGlyphIndexAsync(c).ConfigureAwait(false);
-
-            return await Font.RasterizeGlyphAsync(glyphIndex, rawVariation, cancellationToken).ConfigureAwait(false);
+            return Get(name);
         }
 
         public Stream GetStream(string name) => throw new NotSupportedException();
