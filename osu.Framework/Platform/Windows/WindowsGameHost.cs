@@ -87,14 +87,10 @@ namespace osu.Framework.Platform.Windows
             timePeriod = new TimePeriod(1);
         }
 
-        /*
         protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface)
             => FrameworkEnvironment.UseSDL3 || Config.Get<bool>(Configuration.FrameworkSetting.UseExperimentalSDL3)
                 ? new SDL3WindowsWindow(preferredSurface, Options.FriendlyGameName)
                 : new SDL2WindowsWindow(preferredSurface, Options.FriendlyGameName);
-        */
-
-        protected override IWindow CreateWindow(GraphicsSurfaceType preferredSurface) => new SDL3WindowsWindow(preferredSurface, Options.FriendlyGameName);
 
         public override IEnumerable<KeyBinding> PlatformKeyBindings => base.PlatformKeyBindings.Concat(new[]
         {
