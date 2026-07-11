@@ -49,6 +49,10 @@ namespace osu.Framework.Audio.Mixing
 
         public abstract void RemoveEffect(IEffectParameter effect);
 
+        public abstract void AddDSP(DSPProcedure effect, int priority = 0);
+
+        public abstract void RemoveDSP(DSPProcedure effect);
+
         public abstract void UpdateEffect(IEffectParameter effect);
 
         /// <summary>

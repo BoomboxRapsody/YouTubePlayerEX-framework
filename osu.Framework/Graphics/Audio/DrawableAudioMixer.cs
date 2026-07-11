@@ -66,6 +66,28 @@ namespace osu.Framework.Graphics.Audio
             }
         }
 
+        public void AddDSP(DSPProcedure effect, int priority = 0)
+        {
+            if (LoadState < LoadState.Ready)
+                Schedule(() => mixer.AddDSP(effect, priority));
+            else
+            {
+                Debug.Assert(mixer != null);
+                mixer.AddDSP(effect, priority);
+            }
+        }
+
+        public void RemoveDSP(DSPProcedure effect)
+        {
+            if (LoadState < LoadState.Ready)
+                Schedule(() => mixer.RemoveDSP(effect));
+            else
+            {
+                Debug.Assert(mixer != null);
+                mixer.RemoveDSP(effect);
+            }
+        }
+
         public void UpdateEffect(IEffectParameter effect)
         {
             if (LoadState < LoadState.Ready)

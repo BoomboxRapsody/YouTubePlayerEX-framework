@@ -30,6 +30,7 @@ namespace osu.Framework.Audio.Mixing.Bass
         private readonly List<IBassAudioChannel> activeChannels = new List<IBassAudioChannel>();
 
         private readonly Dictionary<IEffectParameter, int> activeEffects = new Dictionary<IEffectParameter, int>();
+        private readonly Dictionary<DSPProcedure, int> activeDSPs = new Dictionary<DSPProcedure, int>();
 
         private const int frequency = 44100;
 
@@ -55,6 +56,24 @@ namespace osu.Framework.Audio.Mixing.Bass
             ManagedBass.Bass.FXSetParameters(handle, effect);
 
             activeEffects[effect] = handle;
+        });
+
+        public override void AddDSP(DSPProcedure effect, int priority = 0) => EnqueueAction(() =>
+        {
+            if (activeDSPs.ContainsKey(effect))
+                return;
+
+            int handle = ManagedBass.Bass.ChannelSetDSP(Handle, effect, IntPtr.Zero, priority);
+
+            activeDSPs[effect] = handle;
+        });
+
+        public override void RemoveDSP(DSPProcedure effect) => EnqueueAction(() =>
+        {
+            if (!activeDSPs.Remove(effect, out int handle))
+                return;
+
+            ManagedBass.Bass.ChannelRemoveDSP(Handle, handle);
         });
 
         public override void RemoveEffect(IEffectParameter effect) => EnqueueAction(() =>

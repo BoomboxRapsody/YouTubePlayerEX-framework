@@ -39,6 +39,20 @@ namespace osu.Framework.Audio.Mixing
         void RemoveEffect(IEffectParameter effect);
 
         /// <summary>
+        /// Applies an DSP to the mixer.
+        /// </summary>
+        /// <param name="effect">The DSP functions.</param>
+        /// <param name="priority">The DSP priority. Lower values indicate higher priority and negative values are allowed.
+        ///     When there are multiple effects with the same priority, their ordering depends on the order in which they are added to the <see cref="IAudioMixer"/>.</param>
+        void AddDSP(DSPProcedure effect, int priority = 0);
+
+        /// <summary>
+        /// Removes an DSP from the mixer.
+        /// </summary>
+        /// <param name="effect">The DSP.</param>
+        void RemoveDSP(DSPProcedure effect);
+
+        /// <summary>
         /// Updates an effect's parameters.
         /// </summary>
         /// <param name="effect"></param>
