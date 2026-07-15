@@ -7610,6 +7610,16 @@ namespace osu.Framework.Graphics.Sprites
             /// Yin Yang
             /// </summary>
             public static IconUsage YinYang => Get(0xf6ad);
+
+            /// <summary>
+            /// X (Twitter)
+            /// </summary>
+            public static IconUsage TwitterX => Get(0xe61b);
+
+            /// <summary>
+            /// YouTube Shorts
+            /// </summary>
+            public static IconUsage YTShorts => Get(0xe8bc);
         }
     }
 }
