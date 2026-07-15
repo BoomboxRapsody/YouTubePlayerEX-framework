@@ -13,7 +13,7 @@ namespace osu.Framework.Graphics.Sprites
 {
     public static class FontAwesome
     {
-        public static IconUsage Get(int icon) => new IconUsage((char)icon, "FontAwesome");
+        public static IconUsage Get(int icon) => new IconUsage((char)icon, "FontAwesome7");
 
         public static class Brands
         {
