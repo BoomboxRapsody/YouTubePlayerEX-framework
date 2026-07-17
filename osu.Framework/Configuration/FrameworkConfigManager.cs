@@ -61,7 +61,7 @@ namespace osu.Framework.Configuration
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
         {
             new TrackedSetting<FrameSync>(FrameworkSetting.FrameSync, v => new SettingDescription(v, "Frame Limiter", v.GetDescription(), "Ctrl+F7")),
-            new TrackedSetting<string>(FrameworkSetting.AudioDevice, v => new SettingDescription(v, "Audio Device", string.IsNullOrEmpty(v) ? "Default" : v, v)),
+            new TrackedSetting<string>(FrameworkSetting.AudioDevice, v => new SettingDescription(v, "Audio Device", string.IsNullOrEmpty(v) ? "Default" : v, string.Empty)),
             new TrackedSetting<bool>(FrameworkSetting.ShowLogOverlay, v => new SettingDescription(v, "Debug Logs", v ? "visible" : "hidden", "Ctrl+F10")),
             new TrackedSetting<Size>(FrameworkSetting.WindowedSize, v => new SettingDescription(v, "Screen resolution", $"{v.Width}x{v.Height}")),
             new TrackedSetting<WindowMode>(FrameworkSetting.WindowMode, v => new SettingDescription(v, "Screen Mode", v.ToString(), "Alt+Enter")),
