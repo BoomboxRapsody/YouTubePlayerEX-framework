@@ -205,7 +205,6 @@ namespace osu.Framework
             // nested store for framework provided fonts.
             // note that currently this means there could be two async font load operations.
             Fonts.AddStore(localFonts = new FontStore(Host.Renderer, useAtlas: false));
-            Fonts.AddStore(new EmojiStore(Host.Renderer, Resources));
 
             // Roboto (FrameworkFont.Regular)
             /*
