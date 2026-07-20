@@ -233,9 +233,9 @@ namespace osu.Framework
             addFont(Fonts, Resources, @"Fonts/FontAwesome5/FontAwesome-Regular");
             addFont(Fonts, Resources, @"Fonts/FontAwesome5/FontAwesome-Brands");
             */
-            addFont(Fonts, Resources, @"Fonts/FontAwesome7/FontAwesome7-Solid");
-            addFont(Fonts, Resources, @"Fonts/FontAwesome7/FontAwesome7-Regular");
-            addFont(Fonts, Resources, @"Fonts/FontAwesome7/FontAwesome7-Brands");
+            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Solid");
+            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Regular");
+            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Brands");
 
             dependencies.Cache(Fonts);
 

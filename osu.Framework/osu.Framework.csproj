@@ -57,4 +57,7 @@
     <PackageReference Include="Markdig" Version="0.23.0" />
     <PackageReference Include="System.Numerics.Tensors" Version="8.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\FontAwesome7\" />
+  </ItemGroup>
 </Project>
