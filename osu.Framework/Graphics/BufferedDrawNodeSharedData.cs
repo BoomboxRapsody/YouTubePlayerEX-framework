@@ -84,7 +84,7 @@ namespace osu.Framework.Graphics
         /// <summary>
         /// The <see cref="IFrameBuffer"/> which contains the original version of the rendered <see cref="Drawable"/>.
         /// </summary>
-        public IFrameBuffer MainBuffer => mainBuffer ??= renderer.CreateFrameBuffer(textureFormat, mainBufferFormats, filterMode);
+        public IFrameBuffer MainBuffer => mainBuffer ??= Renderer.CreateFrameBuffer(textureFormat, mainBufferFormats, filterMode);
 
         public void Initialise(IRenderer renderer)
         {
