@@ -215,7 +215,11 @@ namespace osu.Framework
             */
             var roboto = AddVariableFont(Resources, @"Fonts/Roboto-TTF/Roboto", localFonts);
             roboto.AddInstance(@"Roboto-Regular");
+            roboto.AddInstance(@"Roboto-ExtraBold");
+            roboto.AddInstance(@"Roboto-Black");
             roboto.AddInstance(@"Roboto-Bold");
+            roboto.AddInstance(@"Roboto-SemiBold");
+            roboto.AddInstance(@"Roboto-Light");
             var robotoItalic = AddVariableFont(Resources, @"Fonts/Roboto-TTF/RobotoItalic", localFonts);
             robotoItalic.AddInstance(@"Roboto-Italic", @"Roboto-RegularItalic");
             robotoItalic.AddInstance(@"Roboto-BoldItalic");
