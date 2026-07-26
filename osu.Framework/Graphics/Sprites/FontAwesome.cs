@@ -13,21 +13,11 @@ namespace osu.Framework.Graphics.Sprites
 {
     public static class FontAwesome
     {
-        public static IconUsage Get(int icon) => new IconUsage((char)icon, "FontAwesome7");
+        public static IconUsage Get(int icon) => new IconUsage((char)icon, "FontAwesome");
 
         public static class Brands
         {
             public static IconUsage Get(int icon) => FontAwesome.Get(icon).With(weight: "Brands");
-
-            /// <summary>
-            /// X (Twitter)
-            /// </summary>
-            public static IconUsage TwitterX => Get(0xe61b);
-
-            /// <summary>
-            /// YouTube Shorts
-            /// </summary>
-            public static IconUsage YTShorts => Get(0xe8bc);
 
             /// <summary>
             /// 500px

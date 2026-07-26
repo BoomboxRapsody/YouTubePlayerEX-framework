@@ -232,14 +232,9 @@ namespace osu.Framework
             roboto.AddInstance("Roboto-CondensedRegular", "RobotoCondensed-Regular");
             roboto.AddInstance("Roboto-CondensedBold", "RobotoCondensed-Bold");
 
-            /*
             addFont(Fonts, Resources, @"Fonts/FontAwesome5/FontAwesome-Solid");
             addFont(Fonts, Resources, @"Fonts/FontAwesome5/FontAwesome-Regular");
             addFont(Fonts, Resources, @"Fonts/FontAwesome5/FontAwesome-Brands");
-            */
-            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Solid");
-            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Regular");
-            AddOutlineFont(Resources, @"Fonts/FontAwesome7/FontAwesome7-Brands");
 
             dependencies.Cache(Fonts);
 
