@@ -9,7 +9,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/ppy/osu-framework/badge)](https://www.codefactor.io/repository/github/ppy/osu-framework)
 [![dev chat](https://discordapp.com/api/guilds/188630481301012481/widget.png?style=shield)](https://discord.gg/ppy)
 
-A tweaked game framework written with [osu!](https://github.com/BoomboxRapsody/NekoPlayer) in mind.
+A game framework written with [osu!](https://github.com/ppy/osu) in mind.
 
 ## Developing a game using osu!framework
 
