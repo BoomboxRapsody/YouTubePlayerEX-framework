@@ -18,7 +18,7 @@ namespace osu.Framework.iOS.Graphics.Textures
         {
         }
 
-        protected override unsafe Image<TPixel> ImageFromStream<TPixel>(Stream stream)
+        protected override unsafe PremultipliedImage ImageFromStream(Stream stream)
         {
             using (new NSAutoreleasePool())
             {
@@ -33,7 +33,7 @@ namespace osu.Framework.iOS.Graphics.Textures
                     throw new ArgumentException($"{nameof(Image)} could not be created from {nameof(stream)}.");
 
                 var cgImage = new Platform.Apple.Native.CGImage(uiImage.CGImage!.Handle);
-                return ImageFromCGImage<TPixel>(cgImage);
+                return ImageFromCGImage(cgImage);
             }
         }
     }

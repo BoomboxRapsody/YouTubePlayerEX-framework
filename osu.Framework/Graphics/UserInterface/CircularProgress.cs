@@ -6,6 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Rendering.Vertices;
@@ -194,7 +195,7 @@ namespace osu.Framework.Graphics.UserInterface
                 TexturedVertex2D createVertex(Vector2 pos) => new TexturedVertex2D(renderer)
                 {
                     Position = Vector2Extensions.Transform(pos * drawSize, DrawInfo.Matrix),
-                    Colour = DrawColourInfo.Colour.Interpolate(pos).SRGB,
+                    Colour = DrawColourInfo.Colour.Interpolate(pos).SRGB.ToPremultiplied(),
                     TextureRect = new Vector4(tRect.Left, tRect.Top, tRect.Right, tRect.Bottom),
                     TexturePosition = new Vector2(tRect.Left + tRect.Width * pos.X, tRect.Top + tRect.Height * pos.Y)
                 };

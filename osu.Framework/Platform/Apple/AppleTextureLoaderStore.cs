@@ -21,8 +21,7 @@ namespace osu.Framework.Platform.Apple
         {
         }
 
-        protected unsafe Image<TPixel> ImageFromCGImage<TPixel>(CGImage cgImage)
-            where TPixel : unmanaged, IPixel<TPixel>
+        protected unsafe PremultipliedImage ImageFromCGImage(CGImage cgImage)
         {
             int width = (int)cgImage.Width;
             int height = (int)cgImage.Height;
@@ -53,13 +52,13 @@ namespace osu.Framework.Platform.Apple
             var result = vImage.InitWithCGImage(&accImage, &format, null, cgImage.Handle, vImage_Flags.NoAllocate);
             Debug.Assert(result == vImage_Error.NoError);
 
-            var image = new Image<TPixel>(width, height);
+            var image = new PremultipliedImage(width, height);
 
             for (int i = 0; i < height; i++)
             {
-                var imageRow = image.DangerousGetPixelRowMemory(i);
-                var dataRow = new ReadOnlySpan<TPixel>(&accImage.Data[(int)bytesPerRow * i], width);
-                dataRow.CopyTo(imageRow.Span);
+                var imageRow = image.DangerousGetPremultipliedPixelRowMemory(i); // 이 메서드가 Memory<Rgba32> 또는 Span<Rgba32>를 반환한다고 가정
+                var dataRow = new ReadOnlySpan<Rgba32>((Rgba32*)(&accImage.Data[(int)bytesPerRow * i]), width);
+                dataRow.CopyTo(imageRow.Span); // imageRow.Span이 Span<Rgba32>여야 함
             }
 
             NativeMemory.AlignedFree(accImage.Data);

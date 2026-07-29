@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform.Apple;
 using osu.Framework.Platform.Apple.Native;
@@ -18,7 +19,7 @@ namespace osu.Framework.Platform.MacOS
         {
         }
 
-        protected override unsafe Image<TPixel> ImageFromStream<TPixel>(Stream stream)
+        protected override unsafe PremultipliedImage ImageFromStream(Stream stream)
         {
             using (NSAutoreleasePool.Init())
             {
@@ -33,7 +34,7 @@ namespace osu.Framework.Platform.MacOS
                     throw new ArgumentException($"{nameof(Image)} could not be created from {nameof(stream)}.");
 
                 var cgImage = nsImage.CGImage;
-                return ImageFromCGImage<TPixel>(cgImage);
+                return ImageFromCGImage(cgImage);
             }
         }
     }
