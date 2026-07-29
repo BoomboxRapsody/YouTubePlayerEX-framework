@@ -17,7 +17,6 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
-using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using static FreeTypeSharp.FT;
 using static FreeTypeSharp.FT_Error;
@@ -682,9 +681,7 @@ namespace osu.Framework.Text
         /// The parameters of the font. If null, the default parameters will be
         /// used. This parameter must be null if the font is static.
         /// </param>
-        /// <returns>
-        /// The rasterized glyph suitable for rendering.
-        /// </returns>
+        /// <returns>The rasterized glyph suitable for rendering.</returns>
         /// <exception cref="FreeTypeException">Rasterization of the texture failed.</exception>
         public unsafe TextureUpload? RasterizeGlyph(uint glyphIndex, RawFontVariation? variation)
         {
@@ -747,15 +744,7 @@ namespace osu.Framework.Text
                 }
             }
 
-            using (image)
-            {
-                using var ms = new MemoryStream();
-                // PNG로 인메모리 인코딩 -> PremultipliedImage 로드
-                image.Save(ms, new PngEncoder());
-                ms.Position = 0;
-                var premultiplied = TextureUpload.LoadFromStream(ms);
-                return new TextureUpload(premultiplied);
-            }
+            return new TextureUpload(PremultipliedImage.FromStraight(image));
         }
 
         private unsafe (uint codePoint, uint glyphIndex) getFirstChar()
