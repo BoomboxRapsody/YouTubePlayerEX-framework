@@ -14,7 +14,6 @@ using osu.Framework.Input.Handlers;
 using osu.Framework.Input.Handlers.Mouse;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
-using osu.Framework.Platform.Linux;
 using osu.Framework.Platform.MacOS.Native;
 
 namespace osu.Framework.Platform.MacOS

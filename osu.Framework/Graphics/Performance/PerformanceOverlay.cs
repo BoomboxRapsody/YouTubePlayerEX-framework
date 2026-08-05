@@ -9,6 +9,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Rendering.LowLatency;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Framework.Platform;
@@ -35,6 +36,7 @@ namespace osu.Framework.Graphics.Performance
         private TextFlowContainer? infoText;
 
         private Bindable<FrameSync> configFrameSync = null!;
+        private Bindable<LatencyMode> configLatencyMode = null!;
         private Bindable<ExecutionMode> configExecutionMode = null!;
         private Bindable<WindowMode> configWindowMode = null!;
 
@@ -69,6 +71,9 @@ namespace osu.Framework.Graphics.Performance
 
             configFrameSync = config.GetBindable<FrameSync>(FrameworkSetting.FrameSync);
             configFrameSync.BindValueChanged(_ => updateInfoText());
+
+            configLatencyMode = config.GetBindable<LatencyMode>(FrameworkSetting.LatencyMode);
+            configLatencyMode.BindValueChanged(_ => updateInfoText());
 
             configExecutionMode = config.GetBindable<ExecutionMode>(FrameworkSetting.ExecutionMode);
             configExecutionMode.BindValueChanged(_ => updateInfoText());
@@ -226,6 +231,8 @@ namespace osu.Framework.Graphics.Performance
 
             infoText.NewLine();
 
+            addHeader("LatencyMode:");
+            addValue(configLatencyMode.ToString());
             addHeader("Limiter:");
             addValue(configFrameSync.ToString());
             addHeader("Execution:");

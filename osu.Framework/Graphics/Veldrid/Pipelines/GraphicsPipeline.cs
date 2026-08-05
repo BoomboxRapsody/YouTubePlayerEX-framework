@@ -259,6 +259,10 @@ namespace osu.Framework.Graphics.Veldrid.Pipelines
                 if (layout == null)
                     continue;
 
+                int requiredLength = Math.Max(pipelineDesc.ResourceLayouts?.Length ?? 0, layout.Set + 1);
+                if (pipelineDesc.ResourceLayouts == null || pipelineDesc.ResourceLayouts.Length < requiredLength)
+                    Array.Resize(ref pipelineDesc.ResourceLayouts, requiredLength);
+
                 pipelineDesc.ResourceLayouts[layout.Set] = layout.Layout;
             }
 
@@ -268,6 +272,10 @@ namespace osu.Framework.Graphics.Veldrid.Pipelines
                 var layout = currentShader.GetUniformBufferLayout(name);
                 if (layout == null)
                     continue;
+
+                int requiredLength = Math.Max(pipelineDesc.ResourceLayouts?.Length ?? 0, layout.Set + 1);
+                if (pipelineDesc.ResourceLayouts == null || pipelineDesc.ResourceLayouts.Length < requiredLength)
+                    Array.Resize(ref pipelineDesc.ResourceLayouts, requiredLength);
 
                 pipelineDesc.ResourceLayouts[layout.Set] = layout.Layout;
             }

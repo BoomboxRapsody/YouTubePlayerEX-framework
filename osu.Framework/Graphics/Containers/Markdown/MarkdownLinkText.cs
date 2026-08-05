@@ -1,6 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Cursor;
@@ -19,22 +20,19 @@ namespace osu.Framework.Graphics.Containers.Markdown
     /// </code>
     public partial class MarkdownLinkText : CompositeDrawable, IHasTooltip, IMarkdownTextComponent
     {
-        public LocalisableString TooltipText => Url;
+        public LocalisableString TooltipText => url;
 
         [Resolved]
         private IMarkdownTextComponent parentTextComponent { get; set; } = null!;
 
-        [Resolved]
-        private GameHost host { get; set; } = null!;
-
         private readonly string text;
 
-        protected readonly string Url;
+        private readonly string url;
 
         public MarkdownLinkText(string text, string url)
         {
             this.text = text;
-            Url = url;
+            url = url;
 
             AutoSizeAxes = Axes.Both;
         }
@@ -50,7 +48,7 @@ namespace osu.Framework.Graphics.Containers.Markdown
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(GameHost host)
         {
             SpriteText spriteText;
             InternalChildren = new Drawable[]
@@ -59,14 +57,12 @@ namespace osu.Framework.Graphics.Containers.Markdown
                 {
                     AutoSizeAxes = Axes.Both,
                     Child = spriteText = CreateSpriteText(),
-                    Action = OnLinkPressed,
+                    Action = () => host.OpenUrlExternally(url)
                 }
             };
 
             spriteText.Text = text;
         }
-
-        protected virtual void OnLinkPressed() => host.OpenUrlExternally(Url);
 
         public virtual SpriteText CreateSpriteText()
         {

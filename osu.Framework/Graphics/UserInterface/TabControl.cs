@@ -556,18 +556,6 @@ namespace osu.Framework.Graphics.UserInterface
                         child.Hide();
                 }
             }
-
-            public override void Clear(bool disposeChildren)
-            {
-                tabVisibility.Clear();
-                base.Clear(disposeChildren);
-            }
-
-            public override bool Remove(TabItem<T> drawable, bool disposeImmediately)
-            {
-                tabVisibility.Remove(drawable);
-                return base.Remove(drawable, disposeImmediately);
-            }
         }
     }
 }

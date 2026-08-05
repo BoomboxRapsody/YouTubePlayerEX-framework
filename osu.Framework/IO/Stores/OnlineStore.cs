@@ -15,7 +15,7 @@ namespace osu.Framework.IO.Stores
 {
     public class OnlineStore : IResourceStore<byte[]>
     {
-        public async Task<byte[]> GetAsync(string url, CancellationToken cancellationToken = default)
+        public virtual async Task<byte[]> GetAsync(string url, CancellationToken cancellationToken = default)
         {
             if (!validateScheme(url))
                 return null;
@@ -57,7 +57,7 @@ namespace osu.Framework.IO.Stores
             }
         }
 
-        public Stream GetStream(string url)
+        public virtual Stream GetStream(string url)
         {
             byte[] ret = Get(url);
 
