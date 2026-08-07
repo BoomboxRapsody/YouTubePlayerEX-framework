@@ -262,7 +262,7 @@ namespace osu.Framework.Graphics.Lines
             return result;
         }
 
-        protected virtual BufferedDrawNodeSharedData CreateSharedData() => new BufferedDrawNodeSharedData(TexturePixelFormat.R32Float, new[] { RenderBufferFormat.D16 }, clipToRootNode: true);
+        protected virtual BufferedDrawNodeSharedData CreateSharedData() => new BufferedDrawNodeSharedData(TexturePixelFormat.R16Float, new[] { RenderBufferFormat.D16 }, clipToRootNode: true);
 
         private BufferedDrawNodeSharedData sharedData;
 
