@@ -49,10 +49,10 @@ namespace osu.Framework.Graphics.Rendering
             set => shaderCompilationStore.CacheStorage = value;
         }
 
-        public int MaxTextureSize { get; protected set; } = 4096; // default value is to allow roughly normal flow in cases we don't have graphics context, like headless CI.
+        public int MaxTextureSize { get; protected set; } = 8192; // default value is to allow roughly normal flow in cases we don't have graphics context, like headless CI.
 
         public int MaxTexturesUploadedPerFrame { get; set; } = 32;
-        public int MaxPixelsUploadedPerFrame { get; set; } = 1024 * 1024 * 2;
+        public int MaxPixelsUploadedPerFrame { get; set; } = 2048 * 2048 * 2;
 
         public abstract bool IsDepthRangeZeroToOne { get; }
         public abstract bool IsUvOriginTopLeft { get; }

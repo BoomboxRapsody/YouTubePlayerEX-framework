@@ -40,7 +40,7 @@ namespace osu.Framework.Graphics.Textures
         /// If the built-in GL mipmapping is replaced in the future (see custom generation logic in `{GL,Veldrid}Texture`),
         /// then this limit can be increased to 4096 again.
         /// </remarks>
-        private const int max_atlas_size = 1024;
+        private const int max_atlas_size = 8192;
 
         /// <summary>
         /// Decides at what resolution multiple this <see cref="TextureStore"/> is providing sprites at.
