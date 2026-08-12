@@ -24,8 +24,11 @@ namespace osu.Framework.Android.Graphics.Textures
             {
                 if (bitmap == null) throw new ArgumentException($"{nameof(Image)} could not be created from {nameof(stream)}.");
 
-                int[] pixels = new int[bitmap.Width * bitmap.Height];
-                bitmap.GetPixels(pixels, 0, bitmap.Width, 0, 0, bitmap.Width, bitmap.Height);
+                int width = bitmap.Width;
+                int height = bitmap.Height;
+
+                int[] pixels = new int[width * height];
+                bitmap.GetPixels(pixels, 0, width, 0, 0, width, height);
                 byte[] result = new byte[pixels.Length * sizeof(int)];
                 Buffer.BlockCopy(pixels, 0, result, 0, result.Length);
 
@@ -35,7 +38,7 @@ namespace osu.Framework.Android.Graphics.Textures
                 }
 
                 bitmap.Recycle();
-                return PremultipliedImage.FromPremultiplied(Image.LoadPixelData<Rgba32>(result, bitmap.Width, bitmap.Height));
+                return PremultipliedImage.FromPremultiplied(Image.LoadPixelData<Rgba32>(result, width, height));
             }
         }
     }
