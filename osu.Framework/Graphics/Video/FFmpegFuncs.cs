@@ -58,25 +58,6 @@ namespace osu.Framework.Graphics.Video
                     current = Directory.GetParent(current)?.FullName;
                 }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                string current = Environment.CurrentDirectory;
-                string probe = Path.Combine("FFmpeg", "apple-osx");
-
-                while (current != null)
-                {
-                    string ffmpegBinaryPath = Path.Combine(current, probe);
-
-                    if (Directory.Exists(ffmpegBinaryPath))
-                    {
-                        Console.WriteLine($"FFmpeg binaries found in: {ffmpegBinaryPath}");
-                        ffmpeg.RootPath = ffmpegBinaryPath;
-                        return;
-                    }
-
-                    current = Directory.GetParent(current)?.FullName;
-                }
-            }
             else
                 throw new NotSupportedException(); // fell free add support for platform of your choose
         }
