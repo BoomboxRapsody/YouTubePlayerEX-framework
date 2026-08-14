@@ -220,6 +220,8 @@ namespace osu.Framework.Audio
                 return store;
             });
 
+            Bass.Configure(ManagedBass.Configuration.UnicodeDeviceInformation, true);
+
             syncAudioDevices();
 
             // check for changes in any audio devices every 1000ms (slightly expensive operation)
