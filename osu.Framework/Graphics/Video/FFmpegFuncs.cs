@@ -18,48 +18,8 @@ namespace osu.Framework.Graphics.Video
     {
         static FFmpegFuncs()
         {
-            //DynamicallyLoadedBindings.FunctionResolver = new FFmpegFunctionResolver();
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                string current = Environment.CurrentDirectory;
-                string probe = Path.Combine("FFmpeg", Environment.Is64BitProcess ? "windows-x64-fix" : "windows-x86-fix");
-
-                while (current != null)
-                {
-                    string ffmpegBinaryPath = Path.Combine(current, probe);
-
-                    if (Directory.Exists(ffmpegBinaryPath))
-                    {
-                        Console.WriteLine($"FFmpeg binaries found in: {ffmpegBinaryPath}");
-                        ffmpeg.RootPath = ffmpegBinaryPath;
-                        return;
-                    }
-
-                    current = Directory.GetParent(current)?.FullName;
-                }
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                string current = Environment.CurrentDirectory;
-                string probe = Path.Combine("FFmpeg", Environment.Is64BitProcess ? "linux-x64" : "linux-x86");
-
-                while (current != null)
-                {
-                    string ffmpegBinaryPath = Path.Combine(current, probe);
-
-                    if (Directory.Exists(ffmpegBinaryPath))
-                    {
-                        Console.WriteLine($"FFmpeg binaries found in: {ffmpegBinaryPath}");
-                        ffmpeg.RootPath = ffmpegBinaryPath;
-                        return;
-                    }
-
-                    current = Directory.GetParent(current)?.FullName;
-                }
-            }
-            else
-                throw new NotSupportedException(); // fell free add support for platform of your choose
+            if (RuntimeInfo.IsDesktop)
+                DynamicallyLoadedBindings.FunctionResolver = new FFmpegFunctionResolver();
         }
 
         #region Delegates
